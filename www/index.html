@@ -1,0 +1,461 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link rel="stylesheet" href="stylesheets/base.css">
+<link rel="stylesheet" href="stylesheets/skeleton.css">
+<link rel="stylesheet" href="stylesheets/layout.css">
+</head>
+<body>
+
+
+
+ <style type="text/css">
+
+      /* Sticky footer styles
+      -------------------------------------------------- */
+
+      html,
+      body {
+        height: 100%;
+        /* The html and body elements cannot have any padding or margin. */
+      }
+
+      /* Wrapper for page content to push down footer */
+      #wrap {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        /* Negative indent footer by it's height */
+        margin: 0 auto -60px;
+      }
+
+      /* Set the fixed height of the footer here */
+      #push,
+      #footer {
+        height: 60px;
+      }
+      #footer {
+        background-color: #f5f5f5;
+      }
+
+      /* Lastly, apply responsive CSS fixes as necessary */
+      @media (max-width: 767px) {
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+
+
+
+      /* Custom page CSS
+      -------------------------------------------------- */
+      /* Not required for template or sticky footer method. */
+
+      .container {
+        width: auto;
+        max-width: 680px;
+      }
+      .container .credit {
+        margin: 20px 0;
+      }
+
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+    
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<div id="bodyContainer">
+	
+	
+	
+
+	</div>
+
+<script id="home-tpl" type="text/x-handlebars-template">
+<div id="wrap">
+	<div class="container">
+					<div class="row-fluid">
+						<p><h3> GW Mobile Prototyp </h3> </p>
+						
+							  <div class="span8">
+								<p> Aktuelle Messroute: </p>
+								<select class="center" id='selectRoute'>
+								{{#.}}
+								  <option>{{this.name}}</option>	
+								{{/.}}
+								</select>
+							  </div>
+					  
+							  <div class="span8">
+								<p> Aktuelles Messdatum: </p>
+								<input type="text" value="07.06.2013"/>
+							  </div>
+					  
+							  <div class="span8">
+							  <p>
+								<div class="btn btn-primary" id="routenverwaltung"> Routenverwaltung </div>
+							  </p>
+							  </div>
+					  	
+					</div>
+	</div>
+	<div id="push"></div>
+	
+</div>
+		
+		 <div id="footer">
+	      <div class="container">
+	      		<p> 
+	      			<div class="btn btn-small" id="start"> Start </div>
+	      			<div class="btn btn-small" id="settings"> Settings </div>
+	      		</p>
+				
+	      </div>
+	    </div>
+		
+
+  
+
+
+
+
+
+</script>
+
+
+
+<script id="routes-tpl" type="text/x-handlebars-template">
+	<div id="wrap">
+		<div class="container">
+			<div class="row-fluid">
+					<p><h3> Verwaltung </h3> </p>
+								  <div class="span8">
+									<p> Geladene Messrouten: </p>
+								<table class="table table-striped">
+								<tr>
+								<td>Route</td>
+								<td>Status</td>
+								</tr>
+								{{#.}}
+								<tr>
+								<td>{{this.name}}</td>
+								<td>aktiv</td>
+								</tr>
+								{{/.}}
+								</table>
+								  </div>
+								  
+								<div class="span8">
+								
+								<div class="btn  btn-block"  id="addRoute"> Neue Route laden </div>
+								<div class="btn  btn-block"  id="closeRoute"> Route abschließen </div>	
+								<div class="btn  btn-block"  id="deleteRoute"> Route löschen </div>	
+								
+								</div>
+			
+				  
+			</div>
+		</div>
+		<div id="push"></div>
+	</div>
+	
+	  <div id="footer">
+      <div class="container">
+      	<p>
+			<div class="btn btn-small" id="settings"> Settings </div>
+		</p>
+      </div>
+    </div>
+	
+	
+
+
+ 
+
+</script>
+
+
+<script id="settings-tpl" type="text/x-handlebars-template">
+<div id="wrap"> 	
+	<div class="container">
+		<div class="row-fluid">
+			<p><h3> Einstellungen </h3> </p>
+				  <div class="span8">
+					<p><h4>Server Einstellungen:</h4> </p>
+				  </div>
+		  
+				  <div class="span8">
+					SyncGWM.mob(URL):
+					<input type="text" id="gwmURL" value="http://localhost/SyncGwmmob/sync.asmx/getMessroutenListe"/>
+					<div>GPS: {{#.}}{{this}}{{/.}}</div>
+				  </div>
+		  
+				 <div class="span8">
+				 <p>
+					<div> Benutzername: <input type="text" value="testuser" id="user"/> </div>
+					<div> Passwort: <input type="text" value="1234" id="pw"/> </div>
+				 </p>
+				  <div class="btn" id="accSetting"> accept </div>
+				 </div>
+		   	
+		</div>
+	</div>
+		<div id="push"></div>
+</div>	
+	
+	 <div id="footer">
+      
+      </div>
+    </div>
+	
+	
+
+
+
+
+   
+
+</script>
+
+
+
+
+
+<script id="loadRoute-tpl" type="text/x-handlebars-template">
+<div id="wrap"> 	
+	<div class="container">
+		<div class="row-fluid">
+		<p>Folgende Routen stehen für Sie 
+		  auf dem Server zur Verfügung.
+		   Wählen sie die benötigten Routen aus
+		   und drücken auf "Routen laden".</p>
+			<p><h3> Messrouten: </h3> </p>
+				  <div class="span8">
+						<p>
+						{{#.}}
+    						 <input type="checkbox" id="this.name" value="{{this.name}}" > {{this.name}}<br>
+						{{/.}}
+						</p>
+    					<div class="btn btn-block" id="loadRoute">Routen laden</div>
+				  </div>
+		  			
+				 
+		  
+				 
+		</div>
+	</div>
+		<div id="push"></div>
+</div>	
+	
+	 <div id="footer">
+      <div class="container">
+      		
+      </div>
+  	 </div>
+	
+	
+</script>
+
+
+
+ 
+
+<script id="gis-tpl" type="text/x-handlebars-template">
+ 	
+	<div class="container">
+		<div class="row-fluid">
+			<p><h3> Diese Karte zeigt die aktuellen Messpunkte: </h3> </p>
+			<div class="btn btn-small" id="myPosition">Ihr Standort</div>
+			<div class="btn btn-small" id="mpPosition">Standort der Messstelle</div>
+			<div class="span-8" id="body">
+			 
+			 
+			</div>
+		
+		</div>
+	</div>
+		<div id="push"></div>
+
+
+	
+	
+</script>
+
+
+
+<script id="mpList-tpl" type="text/x-handlebars-template">
+<div id="wrap"> 	
+	<div class="container">
+		<div class="row-fluid">
+			<p><h3 id="selRooute"> Messstellen Liste </h3> </p>
+				  <div class="span8">
+							
+ </div>
+		  			<div class="span8">
+								<select class="center" id='selectMP'  	style="width:100%">
+								{{#.}}
+								<option> {{this.counter}}:  ({{this.number}}) Datum: {{this.date}} Wert: {{this.value}}</option>	
+							
+								{{/.}}
+								</select>
+								<div class="btn btn-small" id='acceptPoi'> Messstelle auswählen </div>
+								<div class="btn btn-small" id="speechBtn">Wähle via Spracheingabe</div>
+					</div>	
+	 
+		</div>
+	</div>
+		<div id="push"></div>
+</div>	
+	
+	 <div id="footer">
+			
+      <div class="container">
+      		 <div class="btn btn-small" id="showMap"> Karte </div>
+      		 <div class="btn btn-small" id="scan"> Scannen </div>
+      </div>
+  	 </div>
+	
+	
+</script>
+
+
+
+
+<script id="input-tpl" type="text/x-handlebars-template">
+<div id="wrap"> 	
+	<div class="container">
+		<div class="row-fluid">
+			{{#.}}
+			<p><h3> Messstelle Nr. {{this.counter}} : {{this.number}} </h3> </p>
+			<div class="span8">
+		
+			Abstich: {{this.date}} <input  type="text" id="mValue" size="10" maxlength="10" value="{{this.value}}">
+			<div class="btn btn-small" id="speechBtn">Wert via Spracheingabe</div>
+			
+		
+			<br>NN-Höhe: nA müNN		</br>
+			<br>Flurabstand:  nA m		</br>
+		
+			<br>Messhinweise:			</br>
+			<select>
+			<option>Sonstige</option>
+			</select>
+			
+			{{/.}}
+							
+			</div>	
+		
+		</div>
+	</div>
+		<div id="push"></div>
+</div>	
+</div>	
+	
+	 <div id="footer">
+			
+      <div class="container">
+      		 <div class="btn btn-small" id="acceptInput"> speichern </div>    	      		 
+      </div>
+  	 </div>
+	
+	
+</script>
+
+
+
+
+<script id="graph-tpl" type="text/x-handlebars-template">
+<div id="wrap"> 	
+	<div class="container">
+		<div class="row-fluid">
+		
+			<h1>Ganglinie</h1>
+				
+			</div>	
+		
+		</div>
+	</div>
+
+</script>
+
+
+
+
+		<div id="map_canvas" style="width:100%; height:30%"></div>
+ <div id="placeholder" style="width:20%;height:20%;font-size: 14px;line-height:1.2em;"></div>
+</div>
+
+
+
+<script src="lib/jquery-1.8.2.min.js"></script>
+<script src="lib/handlebars.js"></script>
+<script src="js/handleSoap.js"></script>
+<script src="js/storage/memory-store.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBVXnOeoWgKalix-oRZcSoVAadz8Z3Mozc&sensor=true"></script>
+<script src="js/lib/flot.js"></script>
+<script src ="js/SpeechRecognizer.js"></script>
+<script src="lib/cordova-2.5.0.js"></script>
+<script src="js/barcodescanner.js"></script>
+<script src="js/HomeView.js"></script>
+<script src="js/RoutesView.js"></script>
+<script src="js/GraphView.js"></script>
+<script src="js/InputView.js"></script>
+<script src="js/SettingsView.js"></script>
+<script src="js/MpView.js"></script>
+<script src="js/MeasuringPoint.js"></script>
+<script src="js/GisView.js"></script>
+<script src="js/LoadRouteView.js"></script>
+<script src="js/Route.js"></script>
+<script src="js/Parser.js"></script>
+<script src="lib/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
